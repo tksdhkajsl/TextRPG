@@ -4,8 +4,11 @@ class Actor
 public:
 
 protected:
-	int HP = 100;
-	int Damage = 10;
-	int Defense = 0;
+	
+		int Level = 0;
+		int Health = 100;
+		int Damage = 10;
+		int Defense = 0;
+	
 };
 
