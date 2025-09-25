@@ -1,6 +1,6 @@
 #pragma once
 
-class Player; // 전방 선언
+class Player; 
 
 enum class Dungeon
 {

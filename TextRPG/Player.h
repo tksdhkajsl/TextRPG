@@ -26,7 +26,7 @@ public:
 		MaxHP = 500;
 		SkillCooldown = 3; // 강타 쿨타임: 3턴
 	}
-	// 전사의 스킬 "강타"
+	// 전사의 스킬 강타
 	void UseSkill(Actor& Target) override;
 };
 
@@ -42,7 +42,7 @@ public:
 		MaxHP = 350;
 		SkillCooldown = 4; // 이중 공격 쿨타임: 4턴
 	}
-	// 도적의 스킬 "이중 공격"
+	// 도적의 스킬 이중 공격
 	void UseSkill(Actor& Target) override;
 };
 
@@ -58,6 +58,6 @@ public:
 		MaxHP = 200;
 		SkillCooldown = 4; // 화염구 쿨타임: 4턴
 	}
-	// 마법사의 스킬 "화염구"
+	// 마법사의 스킬 화염구
 	void UseSkill(Actor& Target) override;
 };

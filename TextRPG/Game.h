@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Exploration.h"
-#include <map> // std::map을 사용하기 위해 추가
+#include <map> 
 
 class Game
 {

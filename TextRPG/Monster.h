@@ -1,7 +1,7 @@
 #pragma once
 #include "Actor.h"
 
-// enum MonsterType은 현재 코드에서 직접 사용되지 않으므로 그대로 두거나 삭제해도 괜찮습니다.
+
 enum MonsterType
 {
 	SLIME,
@@ -26,7 +26,7 @@ public:
 	{
 		Name = "슬라임";
 		Health = 50;
-		Damage = 10; // 스탯은 이전 버전 기준으로 재조정했습니다.
+		Damage = 10; 
 		Defense = 0;
 		Gold = 10;
 	}
@@ -57,7 +57,7 @@ public:
 		Gold = 30;
 		SkillCooldown = 4; // 스킬 쿨타임 설정
 	}
-	// 오크의 스킬 "맹렬한 공격"
+	// 오크의 스킬 "분노의 일격"
 	void UseSkill(Actor& Target) override;
 };
 

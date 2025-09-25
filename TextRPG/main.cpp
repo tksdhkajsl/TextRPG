@@ -3,7 +3,9 @@
 #include <time.h>
 #include <stdlib.h>
 
-// Player.cpp에 있던 MakeCharactor를 독립적인 함수로 분리합니다.
+// 해당 Player.cpp에 구성하면 오류가 나서, 원인을 AI에 물어봐도 잘 이해가 안되서
+// 하다가 여러 방식 중  main에 별도 구성하는 방식이 있어 해당 방식으로 별도 사용 
+// Player.cpp에 있던 MakeCharactor함수 Main으로 이동 시킴  
 Player* CreatePlayer()
 {
     while (true)
