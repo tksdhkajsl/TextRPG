@@ -22,15 +22,21 @@ public:
 			CurrentSkillCooldown--;
 		}
 	}
-
+	//상태 확인
 	bool IsSkillReady() const { return CurrentSkillCooldown == 0; }
 	bool IsDead() { return Health <= 0; }
+
+	//데미지 계산 및 적용
+	int TakeDamage(int InDamage);
+
+	//Get 함수 정보 확인 및 출력용 
 	std::string GetName() const { return Name; }
-	int GetHealth() const { return Health; }
-	void TakeDamage(int InDamage);
+	int GetHP() const { return Health; }
+	int GetATT() const { return Damage; }
+	int GetDEF() const { return Defense; }
 
 	int Gold = 0;
-	int Damage = 10;
+	int Damage = 0;
 	int Defense = 0;
 
 protected:

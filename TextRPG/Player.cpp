@@ -17,6 +17,26 @@ void Player::ShowStatus() const
 	printf("소지금 (Gold):   %d G\n", this->Gold);
 	printf("-----------------------\n");
 }
+void Player::EquipItem(const ItemInfo& InItem)
+{
+	
+	if (InItem.Type == ItemType::WEAPON)
+	{
+		printf("무기 [%s](을)를 장착했습니다.\n", InItem.Name.c_str());
+		Weapon = InItem.Attack; // 무기 공격력 추가
+	}
+	else if (InItem.Type == ItemType::ARMOR)
+	{
+		printf("방어구 [%s](을)를 장착했습니다.\n", InItem.Name.c_str());
+		Armor = InItem.Defense; // 방어구 방어력 추가
+	}
+
+	// 장비 교체 후 최종 능력치(Damage, Defense)를 다시 계산
+	// 장비를 살 때 마다 변수에 집어 넣어져서 중복 착용 불가능
+	Damage =  BaseATT + Weapon;
+	Defense = BaseDEF + Armor;
+}
+
 
 void Player::RecoverHealth(int InHP)
 {

@@ -12,9 +12,10 @@ Exploration::~Exploration()
         delete InMonster;
 }
 
-// [수정] static 제거 및 매개변수 일치
+
 void Exploration::CreateMonster(Dungeon InDunType)
 {
+    int random = 0;
     if (InMonster != nullptr)
     {
         delete InMonster;
@@ -25,27 +26,62 @@ void Exploration::CreateMonster(Dungeon InDunType)
     {
     case Dungeon::Forest:
     {
-        int random = rand() % 3;
-        if (random == 0) InMonster = new Slime();
-        else if (random == 1) InMonster = new Goblin();
-        else InMonster = new Orc();
+        random = rand() % 3;
+        if (random == 0)
+        {
+            InMonster = new Slime();
+        }
+        else if (random == 1)
+        {
+            InMonster = new Goblin();
+        }
+        else
+        {
+            InMonster = new Orc();
+        }
     }
     break;
     case Dungeon::Cemetery:
     {
-        int random = rand() % 2;
-        if (random == 0) InMonster = new Zombie();
-        else InMonster = new Ghost();
+        random = rand() % 2;
+        if (random == 0)
+        {
+            InMonster = new Zombie();
+        }
+        else
+        {
+            InMonster = new Ghost();
+        }
     }
     break;
     case Dungeon::Top:
+        random = rand() % 4;
+        if (random == 0)
+        {
+            InMonster = new Goblin();
+        }
+        else if (random == 1)
+        {
+            InMonster = new Orc();
+        }
+        else if (random == 2)
+        {
+            InMonster = new Zombie();
+        }
+        else if (random == 3)
+        {
+            InMonster = new Ghost();
+        }
+        else
+        {
         InMonster = new Gargoyle();
+        }
         break;
     }
 
     if (InMonster != nullptr)
     {
-        // [수정] printf에 인수가 누락되지 않도록 주의
+        
         printf("\n%s(이)가 나타났다!\n", InMonster->GetName().c_str());
     }
 }
@@ -63,19 +99,24 @@ void Exploration::StartBattle(Player* InPlayer)
     while (true)
     {
         printf("\n--- %s ---\n", InPlayer->GetName().c_str());
-        printf("HP: %d\n", InPlayer->GetHealth());
+        printf("체력 (HP): %d\n", InPlayer->GetHP());
+        printf("공격력 (ATT): %d\n", InPlayer->GetATT());
+        printf("방어력 (DEF): %d\n", InPlayer->GetDEF());
         printf("--- %s ---\n", InMonster->GetName().c_str());
-        printf("HP: %d\n", InMonster->GetHealth());
+        printf("체력 (HP): %d\n", InMonster->GetHP());
+        printf("공격력 (ATT): %d\n", InMonster->GetATT());
+        printf("방어력 (DEF): %d\n", InMonster->GetDEF());
 
-        printf("\n[1. 공격 2. 스킬 3. 도망가기]\n>> ");
+        printf("\n[1. 공격 2. 스킬]\n>> ");
         int choice;
         std::cin >> choice;
 
         if (choice == 1) // 공격
         {
+           
             printf("\n플레이어의 공격!\n");
-            InMonster->TakeDamage(InPlayer->Damage);
-            printf("%s에게 %d의 데미지를 입혔다!\n", InMonster->GetName().c_str(), std::max(1, InPlayer->Damage - InMonster->Defense));
+            int InDamage = InMonster->TakeDamage(InPlayer->Damage);
+            printf("%s에게 %d의 데미지를 입혔다!\n", InMonster->GetName().c_str(), InDamage);
         }
         else if (choice == 2) // 스킬
         {
@@ -88,22 +129,7 @@ void Exploration::StartBattle(Player* InPlayer)
                 printf("\n스킬을 아직 사용할 수 없습니다! (쿨타임 남음)\n");
                 continue; // 행동 선택으로 다시 돌아감
             }
-        }
-        else if (choice == 3) // 도망
-        {
-            if (rand() % 2 == 0)
-            {
-                printf("\n무사히 도망쳤다!\n");
-                delete InMonster;
-                InMonster = nullptr;
-                return;
-            }
-            else
-            {
-                printf("\n도망치지 못했다!\n");
-                // 도망 실패 시 몬스터에게 턴이 넘어감
-            }
-        }
+        }        
         else
         {
             printf("잘못된 입력입니다.\n");
@@ -130,8 +156,8 @@ void Exploration::StartBattle(Player* InPlayer)
         else // 아니면 일반 공격
         {
             printf("\n%s의 공격!\n", InMonster->GetName().c_str());
-            InPlayer->TakeDamage(InMonster->Damage);
-            printf("플레이어는 %d의 데미지를 입었다!\n", std::max(1, InMonster->Damage - InPlayer->Defense));
+            int InDamage = InPlayer->TakeDamage(InMonster->Damage);
+            printf("플레이어는 %d의 데미지를 입었다!\n", InDamage);
         }
 
         // 플레이어 사망 체크
