@@ -1,19 +1,19 @@
 #pragma once
 
+class Player; // 전방 선언
+
+enum class Dungeon
+{
+    None,
+    Forest,
+    Cemetery,
+    Top
+};
 
 class Map
 {
 public:
-	void MapMovement();
-	void Shop();
-	void Dungeon();
-	void Inn();
-
-};
-
-enum class Dungeon
-{
-	Forest = 10,
-	Cemetery = 15,
-	Top = 20
+    void Shop(Player& InPlayer);
+    Dungeon DungeonMove();
+    void Inn(Player& InPlayer);
 };

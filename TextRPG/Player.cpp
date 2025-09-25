@@ -1,71 +1,71 @@
 #include "Player.h"
-#include<map>
-#include<iostream>
+#include "Map.h"
+#include "Game.h"
+#include <map>
+#include <iostream>
+#include <algorithm>
 
 
-
-//
-////참조할 내용
-//void Day0924::TestMap()
-//{
-//	std::map<CharacterType, CharacterStatus> Characters;
-//
-//	Characters[CharacterType::Warrior] = { 10, 200, 15 };
-//	Characters[CharacterType::Mage] = { 8, 100, 5 };
-//	Characters[CharacterType::Archer] = { 12, 150, 20 };
-//
-//	CharacterStatus& MageStatus = Characters[CharacterType::Mage]; // []연산자로 Value에 접근
-//	printf("[] 접근법 : %s", ToString(CharacterType::Mage).c_str());
-//	PrintStatus(MageStatus);
-//
-//	if (Characters.contains(CharacterType::Mage))	// 없는 키에 접근하는 것을 방지하기 위해 반드시 체크해야 한다.
-//	{
-//		// 있다.
-//		CharacterStatus& MageStatus = Characters[CharacterType::Mage]; // []연산자로 Value에 접근
-//		printf("\n[] 접근법 : %s", ToString(CharacterType::Mage).c_str());
-//		PrintStatus(MageStatus);
-//	}
-//	else
-//	{
-//		// 없다.
-//	}
-//
-//	// 없는 항목에 접근하면 새 항목이 생긴다.
-//	CharacterStatus& ThiefStatus = Characters[CharacterType::Thief];
-//	printf("[] 없는 키 접근 : %s", ToString(CharacterType::Thief).c_str());
-//	PrintStatus(ThiefStatus);
-//
-//	printf("\n전체 캐릭터 출력\n");
-//	//for( const std::pair<CharacterType, CharacterStatus>& pair :Characters)
-//	for (const auto& pair : Characters)
-//	{
-//		printf("캐릭터 타입 : %s", ToString(pair.first).c_str());
-//		PrintStatus(pair.second); // first = 키, second = value
-//	}
-//
-//	printf("\n도적 삭제\n");
-//	Characters.erase(CharacterType::Thief);
-//
-//	printf("\n전체 캐릭터 출력\n");
-//	for (const auto& pair : Characters)
-//	{
-//		printf("캐릭터 타입 : %6s", ToString(pair.first).c_str());
-//		PrintStatus(pair.second);	// first = 키, second = value
-//	}
-//
-//	printf("\n전체 삭제\n");
-//	Characters.clear();
-//	printf("\n전체 캐릭터 출력\n");
-//	for (const auto& pair : Characters)
-//	{
-//		printf("캐릭터 타입 : %6s", ToString(pair.first).c_str());
-//		PrintStatus(pair.second);	// first = 키, second = value
-//	}
-//
-//	int i = 0;
-//}
-
-void Player::MakeCharactor()
+void Player::ShowStatus() const
 {
-	
+	printf("=======================\n");
+	printf("      << %s Status >>\n", this->Name.c_str());
+	printf("=======================\n");
+	printf("체력 (Health):   %d / %d\n", this->Health, this->MaxHP);
+	printf("공격력 (Damage): %d\n", this->Damage);
+	printf("방어력 (Defense):%d\n", this->Defense);
+	printf("소지금 (Gold):   %d G\n", this->Gold);
+	printf("-----------------------\n");
+}
+
+void Player::RecoverHealth(int InHP)
+{
+	Health += InHP;
+	if (Health > MaxHP)
+	{
+		Health = MaxHP;
+	}
+}
+
+// --- 스킬 구현 ---
+
+void Warrior::UseSkill(Actor& Target)
+{
+	printf("\n전사가 [강타] 스킬을 사용합니다!\n");
+	int SkillDamage = static_cast<int>(Damage * 2.0f); // 기본 공격력의 2배 데미지
+	Target.TakeDamage(SkillDamage);
+
+	printf("%s에게 %d의 강력한 데미지를 입혔다!\n", Target.GetName().c_str(), std::max(1, SkillDamage - Target.Defense));
+	CurrentSkillCooldown = SkillCooldown; // 스킬 사용 후 쿨타임 적용
+}
+
+void Thief::UseSkill(Actor& Target)
+{
+	printf("\n도적이 [이중 공격] 스킬을 사용합니다! 두 번 빠르게 공격합니다.\n");
+	int SkillDamage = static_cast<int>(Damage * 0.8f); // 한 타당 기본 공격력의 80% 데미지
+
+	// 첫 번째 공격
+	Target.TakeDamage(SkillDamage);
+	printf("첫 번째 공격! %s에게 %d의 데미지!\n", Target.GetName().c_str(), std::max(1, SkillDamage - Target.Defense));
+
+	if (!Target.IsDead()) // 첫 타에 죽지 않았다면 두 번째 공격
+	{
+		// 두 번째 공격
+		Target.TakeDamage(SkillDamage);
+		printf("두 번째 공격! %s에게 %d의 데미지!\n", Target.GetName().c_str(), std::max(1, SkillDamage - Target.Defense));
+	}
+	CurrentSkillCooldown = SkillCooldown;
+}
+
+void Mage::UseSkill(Actor& Target)
+{
+	printf("\n마법사가 [화염구] 스킬을 시전합니다! 대상의 방어력을 일부 무시합니다.\n");
+	int OriginalDefense = Target.Defense;
+	Target.Defense /= 2; // 대상의 방어력을 일시적으로 절반으로 만듦
+	int SkillDamage = static_cast<int>(Damage * 1.5f); // 기본 공격력의 1.5배 데미지
+
+	Target.TakeDamage(SkillDamage);
+	printf("거대한 화염구가 %s를 덮쳐 %d의 데미지를 입혔다!\n", Target.GetName().c_str(), std::max(1, SkillDamage - Target.Defense));
+	Target.Defense = OriginalDefense; // 대상의 방어력을 원상 복구
+	CurrentSkillCooldown = SkillCooldown;
 }

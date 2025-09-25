@@ -1,0 +1,26 @@
+#pragma once
+#include "Player.h"
+#include "Map.h"
+#include "Exploration.h"
+#include <map> // std::map을 사용하기 위해 추가
+
+class Game
+{
+public:
+    Game(Player* player);
+    void Run();
+
+private:
+    void GoToDungeon();
+    void StartDungeonExploration(Dungeon dungeonType);
+
+private:
+    Player* InPlayer;
+    Map InMap;
+    Exploration InExploration;
+
+    // 던전 클리어에 필요한 이동 횟수를 저장
+    std::map<Dungeon, int> DungeonClearCounts;
+    // 현재 던전의 남은 이동 횟수
+    int currentDungeonProgress = 0;
+};
