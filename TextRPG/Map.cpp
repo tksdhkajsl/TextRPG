@@ -41,7 +41,7 @@ void Map::Shop(Player& InPlayer)
 				SellList.push_back(Info);
 				ItemIndex++;
 			}
-			printf("%d. 구매하지 않기\n", ItemIndex);
+			printf("%d. 나가기\n", ItemIndex);
 
 			printf(">> ");
 			int BuyChoice = 0;
@@ -65,7 +65,7 @@ void Map::Shop(Player& InPlayer)
 			}
 			else if (BuyChoice == ItemIndex)
 			{
-				printf("구매를 취소합니다.\n");
+				printf("상점 메뉴로 돌아갑니다.\n");
 			}
 			else
 			{
