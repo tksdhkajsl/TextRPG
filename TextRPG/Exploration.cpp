@@ -55,7 +55,7 @@ void Exploration::CreateMonster(Dungeon InDunType)
     }
     break;
     case Dungeon::Top:
-        random = rand() % 4;
+        random = rand() % 5;
         if (random == 0)
         {
             InMonster = new Goblin();
@@ -82,27 +82,27 @@ void Exploration::CreateMonster(Dungeon InDunType)
     if (InMonster != nullptr)
     {
         
-        printf("\n%s(이)가 나타났다!\n", InMonster->GetName().c_str());
+        printf("\n[%s](이)가 나타났다!\n", InMonster->GetName().c_str());
     }
 }
 
-// [수정] static 제거 및 매개변수 일치, 함수 내용 추가
+
 void Exploration::Move(Dungeon InDunType)
 {
     MoveCount++;
     printf("앞으로 이동하여 %d 칸 만큼 전진했습니다.\n", MoveCount);
 }
 
-// [수정] static 제거 및 매개변수 일치
+
 void Exploration::StartBattle(Player* InPlayer)
 {
     while (true)
     {
-        printf("\n--- %s ---\n", InPlayer->GetName().c_str());
+        printf("\n--- [%s] ---\n", InPlayer->GetName().c_str());
         printf("체력 (HP): %d\n", InPlayer->GetHP());
         printf("공격력 (ATT): %d\n", InPlayer->GetATT());
         printf("방어력 (DEF): %d\n", InPlayer->GetDEF());
-        printf("--- %s ---\n", InMonster->GetName().c_str());
+        printf("--- [%s] ---\n", InMonster->GetName().c_str());
         printf("체력 (HP): %d\n", InMonster->GetHP());
         printf("공격력 (ATT): %d\n", InMonster->GetATT());
         printf("방어력 (DEF): %d\n", InMonster->GetDEF());

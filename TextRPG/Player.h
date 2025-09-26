@@ -27,10 +27,10 @@ public:
 		Health = 500;
 		MaxHP = 500;
 		BaseATT = 20;
-		BaseDEF = 15;
+		BaseDEF = 5;
 		Damage = BaseATT;
 		Defense = BaseDEF;
-		SkillCooldown = 3; // 강타 쿨타임: 3턴
+		SkillCooldown = 3; //스킬 쿨타임: 3턴
 	}
 	// 전사의 스킬 강타
 	void UseSkill(Actor& Target) override;
@@ -44,11 +44,11 @@ public:
 		Name = "도적";
 		Health = 350;
 		BaseATT = 35;
-		BaseDEF = 5;
+		BaseDEF = 3;
 		Damage = BaseATT;
 		Defense = BaseDEF;
 		MaxHP = 350;
-		SkillCooldown = 4; // 이중 공격 쿨타임: 4턴
+		SkillCooldown = 4; 
 	}
 	// 도적의 스킬 이중 공격
 	void UseSkill(Actor& Target) override;
@@ -66,7 +66,7 @@ public:
 		Damage = BaseATT;
 		Defense = BaseDEF;
 		MaxHP = 200;
-		SkillCooldown = 4; // 화염구 쿨타임: 4턴
+		SkillCooldown = 4; 
 	}
 	// 마법사의 스킬 화염구
 	void UseSkill(Actor& Target) override;

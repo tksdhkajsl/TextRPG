@@ -12,7 +12,7 @@ Map::Map()
 {
 	ItemDatabase[ItemID::ShortSword] = { ItemID::ShortSword,   ItemType::WEAPON, "숏소드",   1000, 22, 0 };
 	ItemDatabase[ItemID::LongSword] = { ItemID::LongSword,    ItemType::WEAPON, "롱소드",   1300, 25, 0 };
-	ItemDatabase[ItemID::Staff] = { ItemID::Staff,        ItemType::WEAPON, "스태프",   1500, 30, 0 };
+	ItemDatabase[ItemID::Staff] = { ItemID::Staff,        ItemType::WEAPON, "스태프",   1500, 20, 3 };
 	ItemDatabase[ItemID::LeatherArmor] = { ItemID::LeatherArmor, ItemType::ARMOR,  "가죽갑옷", 1800, 0, 25 };
 	ItemDatabase[ItemID::HeavyArmor] = { ItemID::HeavyArmor,   ItemType::ARMOR,  "중갑옷",   2400, 0, 40 };
 	ItemDatabase[ItemID::ClothArmor] = { ItemID::ClothArmor,   ItemType::ARMOR,  "천옷",     1700, 0, 20 };
@@ -22,7 +22,7 @@ void Map::Shop(Player& InPlayer)
 {
 	
 	
-	printf("\n상점에 오신 것을 환영합니다! (현재 소지금: %d G)\n", InPlayer.Gold);
+	printf("\n상점에 오신 것을 환영합니다! (현재 소지금: %d Gold)\n", InPlayer.Gold);
 	while (true)
 	{
 		printf("\n[1. 아이템 구매 2. 나가기]\n>> ");
@@ -37,7 +37,7 @@ void Map::Shop(Player& InPlayer)
 			int ItemIndex = 1;
 			for (auto const& [ID, Info] : ItemDatabase)
 			{
-				printf("%d. %s [공격력:%d 방어력:%d] (%d G)\n", ItemIndex, Info.Name.c_str(), Info.Attack, Info.Defense, Info.Price);
+				printf("%d. %s [공격력:%d 방어력:%d] (%d Gold)\n", ItemIndex, Info.Name.c_str(), Info.Attack, Info.Defense, Info.Price);
 				SellList.push_back(Info);
 				ItemIndex++;
 			}
@@ -55,7 +55,7 @@ void Map::Shop(Player& InPlayer)
 				{
 					InPlayer.Gold -= SelectedItem.Price;
 					InPlayer.EquipItem(SelectedItem);
-					printf("\n구매가 완료되었습니다! (남은 소지금: %d G)\n", InPlayer.Gold);
+					printf("\n구매가 완료되었습니다! (남은 소지금: %d Gold)\n", InPlayer.Gold);
 					InPlayer.ShowStatus();
 				}
 				else
@@ -121,7 +121,7 @@ void Map::Inn(Player& InPlayer)
 	printf("여관에 왔습니다.\n");
 	while (true)
 	{
-		printf("[1.숙박 (모든 체력 회복) [100 G] 2.나가기]\n>> ");
+		printf("[1.숙박 (모든 체력 회복) [100 Gold] 2.나가기]\n>> ");
 		std::cin >> Move;
 		switch (Move)
 		{
@@ -137,7 +137,7 @@ void Map::Inn(Player& InPlayer)
 			{
 				printf("소지금이 부족합니다.\n");
 			}
-			break; // 버그 수정: break 추가
+			break; 
 		case 2:
 			printf("여관을 나갑니다.\n");
 			return;

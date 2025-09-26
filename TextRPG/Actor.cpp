@@ -10,7 +10,7 @@ int Actor::TakeDamage(int InDamage)
     
     //크리티컬 확률
     int CriticalATT = rand() % 10;
-    if (CriticalATT == 2 || CriticalATT == 4)
+    if (CriticalATT > 7)
     {
         printf("크리티컬 Hit!!!\n");
         FinalDamage *= 2;
