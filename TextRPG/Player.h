@@ -10,7 +10,7 @@ public:
 	void ShowStatus() const override;
 	void RecoverHealth(int InHP);
 	void EquipItem(const ItemInfo& InItem);
-public:
+protected:
 	int Armor = 0;
 	int Weapon = 0;
 
